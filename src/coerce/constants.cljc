@@ -1,0 +1,20 @@
+(ns coerce.constants)
+
+(def +default-date-pattern+ :yyyy-mm-dd)
+
+(def +date-patterns+
+  {:yyyy-mm-dd          #?(:clj "yyyy-MM-dd"               :cljs "")
+   :yyyy-mm-dd-HHmm     #?(:clj "yyyy-MM-dd HH:mm"         :cljs "")
+   :dd-mm-yyyy          #?(:clj "dd-MM-yyyy"               :cljs "")
+   :dd-mm-yyyy-hhmma    #?(:clj "dd-MM-yyyy hh:mma"        :cljs "")
+   :dd|mm|yyyy          #?(:clj "dd/MM/yyyy"               :cljs "")
+   :dd|mm|yyyy-hhmma    #?(:clj "dd/MM/yyyy hh:mma"        :cljs "")
+   :day-dd|mm|yyyy      #?(:clj "EEEE, dd/MM/yyyy"         :cljs "")
+   :mm-dd-yyyy          #?(:clj "MM-dd-yyyy"               :cljs "")
+   :mm|dd|yyyy          #?(:clj "MM/dd/yyyy"               :cljs "")
+   :day-mm|dd|yyyy      #?(:clj "EEEE, MM/dd/yyyy"         :cljs "")
+   :rfc-3999            #?(:clj "yyyy-MM-dd'T'HH:mm:ssXXX" :cljs "")
+   :iso-8601            #?(:clj "yyyy-MM-dd'T'kk:mm:ssZ"   :cljs "")
+   :yyyy-mm-dd-hh-mm-ss #?(:clj "yyyy-MM-dd kk:mm:ss"      :cljs "")
+   :week                #?(:clj "ww"                       :cljs "")
+   :day                 #?(:clj "EEEE"                     :cljs "")})

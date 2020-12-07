@@ -1,0 +1,27 @@
+* coerce
+
+  For coercing values from one type to another with a consistent API
+  that works the same in clojure as clojurescript.
+
+** Starting REPLs
+
+   Use cider-jack-in-clj and cider-jack-in-cljs (choose node repl) respectively.
+
+** Running Unit tests
+
+   clojure -M:test:runner-clj
+   clojure -M:test:runner-cljs
+
+** Example Usage
+
+   (= (coerce "2020-10-10" :date) #inst "2020-10-10")
+
+   (= (coerce "10/10/2020"       :date   :pattern :dd|mm|yyyy) #inst "2020-10-10")
+   (= (coerce #inst "2020-10-10" :string :pattern :dd|mm|yyyy) "10/10/2020")
+
+* License
+
+  Copyright © 2020 Oberon Systems
+
+  Distributed under the Eclipse Public License either version 1.0 or (at
+  your option) any later version.

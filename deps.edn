@@ -1,0 +1,40 @@
+;;; Lots of alias config options based on
+;;; https://github.com/practicalli/clojure-deps-edn/blob/live/deps.edn
+
+{:paths   ["src" "resources"]
+ :deps    {org.clojure/clojure       {:mvn/version "1.10.1"}
+           org.clojure/clojurescript {:mvn/version "1.10.758"}}
+ :aliases {:test   {:extra-paths ["test"]
+                    :extra-deps  {org.clojure/test.check {:mvn/version "1.0.0"}}}
+           ;; Repls
+           ;; Run a REPL using nREPL server for access by cider-connect-clj
+           ;; clojure -M:middleware/cider-clj
+           :middleware/cider-clj {:extra-deps {nrepl/nrepl       {:mvn/version "0.8.3"}
+                                               cider/cider-nrepl {:mvn/version "0.25.4"}}
+                                  :main-opts  ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}
+           ;;
+           ;;
+           ;; Run a REPL using nREPL server for access by cider-connect-cljs
+           ;; clojure -M:middleware/cider-cljs
+           :middleware/cider-cljs {:extra-deps {cider/cider-nrepl {:mvn/version "0.25.4"}
+                                                cider/piggieback  {:mvn/version "0.5.2"}}
+                                   :main-opts  ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware,cider.piggieback/wrap-cljs-repl]"]}
+           ;;
+           ;; -- Testing
+           ;; clojure -M:test:runner-clj
+           ;; clojure -M:test:runner-cljs
+           :runner-clj  {:extra-deps {com.cognitect/test-runner
+                                      {:git/url "https://github.com/cognitect-labs/test-runner"
+                                       :sha     "b6b3193fcc42659d7e46ecd1884a228993441182"}}
+                         :main-opts ["-m" "cognitect.test-runner"
+                                     "-d" "test"]}
+           :runner-cljs {:extra-deps  {olical/cljs-test-runner {:mvn/version "3.8.0"}}
+                         :main-opts   ["-m" "cljs-test-runner.main"]}
+           ;;
+           ;; -- Deployment
+           :jar     {:extra-deps {seancorfield/depstar {:mvn/version "1.1.128"}}
+                     :main-opts ["-m" "hf.depstar.jar" "coerce.jar"]}
+           :install {:extra-deps {slipset/deps-deploy {:mvn/version "0.1.1"}}
+                     :main-opts ["-m" "deps-deploy.deps-deploy" "install" "coerce.jar"]}
+           :deploy  {:extra-deps {slipset/deps-deploy {:mvn/version "0.1.1"}}
+                     :main-opts ["-m" "deps-deploy.deps-deploy" "deploy" "coerce.jar"]}}}

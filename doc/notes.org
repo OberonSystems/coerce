@@ -1,0 +1,13 @@
+Notes taken from clojure tools that maybe useful later.
+
+Build a deployable jar of this library:
+
+    $ clojure -M:jar
+
+Install it locally:
+
+    $ clojure -M:install
+
+Deploy it to Clojars -- needs `CLOJARS_USERNAME` and `CLOJARS_PASSWORD` environment variables:
+
+    $ clojure -M:deploy
