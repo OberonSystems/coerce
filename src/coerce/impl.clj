@@ -43,10 +43,8 @@
 (extend-type java.lang.String
   ;;
   Coerce->String
-  (coerce->string [v {:keys [clean?] :or {clean? true}}]
-    (if clean?
-      (clean-string v)
-      v))
+  (coerce->string [v options]
+    (clean-string v options))
   ;;
   Coerce->Boolean
   (coerce->boolean [v {:keys [re-false?]

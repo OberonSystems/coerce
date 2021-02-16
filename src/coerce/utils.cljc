@@ -1,10 +1,25 @@
 (ns coerce.utils
   (:require [clojure.string :as s]))
 
+(defn remove-junk-from-integer
+  [s]
+  (s/replace s #"[^0-9]" ""))
+
+(defn collapse-spaces
+  [s]
+  (s/replace s #"\s+" " "))
+
 (defn clean-string
-  [v]
+  [v & [{:keys [clean? collapse? upper? lower?]
+         :or {clean?    true
+              collapse? true}
+         :as options}]]
   (when-not (s/blank? v)
-    (s/trim v)))
+    (cond-> v
+      clean?    s/trim
+      collapse? collapse-spaces
+      upper?    s/upper-case
+      lower?    s/lower-case)))
 
 (defn join-cleanly
   ([coll]
@@ -14,14 +29,6 @@
         (map clean-string)
         (remove nil?)
         (s/join sep))))
-
-(defn remove-junk-from-integer
-  [s]
-  (s/replace s #"[^0-9]" ""))
-
-(defn collapse-spaces
-  [s]
-  (s/replace s #"\s+" " "))
 
 (defn keywordify
   ([s] (keywordify nil s))
