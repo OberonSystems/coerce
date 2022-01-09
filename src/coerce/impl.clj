@@ -57,7 +57,9 @@
       false))
   ;;
   Coerce->Keyword
-  (coerce->keyword [v {:keys [strict? ns] :as options}]
+  (coerce->keyword [v {:keys [strict? ns]
+                       :or   {strict? false}
+                       :as   options}]
     (if strict?
       (keyword    ns v)
       (keywordify ns v)))
