@@ -9,7 +9,12 @@
                                       coerce->big-integer
                                       coerce->decimal
                                       #?(:clj coerce->big-decimal)
-                                      #?(:clj coerce->date)]]
+                                      #?(:clj coerce->date)
+                                      #?(:clj coerce->local-date)
+                                      #?(:clj coerce->local-time)
+                                      #?(:clj coerce->local-date-time)
+                                      #?(:clj coerce->zoned-date-time)
+                                      #?(:clj coerce->instant)]]
             [coerce.impl :as impl]))
 
 (defmulti coerce (fn [value to & {:as options}]
@@ -63,8 +68,30 @@
           [value _ & {:as options}]
           (coerce->big-decimal value options)))
 
-;;;
+;;; Java Util Date
 
 #?(:clj (defmethod coerce :date
           [value _ & {:as options}]
           (coerce->date value options)))
+
+;;; Java Time
+
+#?(:clj (defmethod coerce :local-date
+           [value _ & {:as options}]
+           (coerce->local-date value options)))
+
+#?(:clj (defmethod coerce :local-time
+           [value _ & {:as options}]
+           (coerce->local-time value options)))
+
+#?(:clj (defmethod coerce :local-date-time
+           [value _ & {:as options}]
+           (coerce->local-date-time value options)))
+
+#?(:clj (defmethod coerce :zoned-date-time
+           [value _ & {:as options}]
+           (coerce->zoned-date-time value options)))
+
+#?(:clj (defmethod coerce :instant
+           [value _ & {:as options}]
+           (coerce->instant value options)))
