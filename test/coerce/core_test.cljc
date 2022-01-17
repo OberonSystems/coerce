@@ -1,6 +1,7 @@
 (ns coerce.core-test
   (:require [clojure.test :refer [deftest testing is run-tests]]
-            [coerce.core :refer [coerce]]))
+            [coerce.core :refer [coerce]]
+            [coerce.constants :refer [add-date-patterns!]]))
 
 (deftest coercions-to-nil
   (testing "Blank Strings"
@@ -88,17 +89,23 @@
                #_(is (thrown? NumberFormatException (coerce "42.42" :integer     :strict? true :throw? true)))
                #_(is (thrown? NumberFormatException (coerce "42.42" :big-integer :strict? true :throw? true)))))))
 
-#_
-(deftest date-coercions
-  (testing "Dates to Strings"
-    (is (= (coerce #inst "2016-10-10" :string) "2016-10-10"))
-    (is (= (coerce #inst "2016-10-10" :string :pattern :dd-mm-yyyy) "10-10-2016"))
-    (is (= (coerce #inst "2016-10-10" :string :pattern :dd|mm|yyyy) "10/10/2016"))
-    ;;
-    (comment
-      (is (= (coerce "2016-10-10" :date)                      #inst "2016-10-10"))
-      (is (= (coerce "10-10-2016" :date :pattern :dd-mm-yyyy) #inst "2016-10-10"))
-      (is (= (coerce "10/10/2016" :date :pattern :dd|mm|yyyy) #inst "2016-10-10")))))
+
+
+#?(:clj
+   (deftest date-coercions
+     (testing "Dates to Strings"
+       (is (= (coerce #inst "2016-10-10" :string) "2016-10-10"))
+       (is (= (coerce #inst "2016-10-10" :string :pattern :dd-mm-yyyy) "10-10-2016"))
+       (is (= (coerce #inst "2016-10-10" :string :pattern :dd|mm|yyyy) "10/10/2016"))
+       ;;
+       (is (= (coerce "2016-10-10" :date)                      #inst "2016-10-10"))
+       (is (= (coerce "10-10-2016" :date :pattern :dd-mm-yyyy) #inst "2016-10-10"))
+       (is (= (coerce "10/10/2016" :date :pattern :dd|mm|yyyy) #inst "2016-10-10")))
+
+     (add-date-patterns! {:24HMM "HHmm"
+                          :dy-dd "E dd"})
+     (is (= (coerce #inst "2016-10-10T11:11:00.000-00:00" :string :pattern :24HMM) "1111"))
+     (is (= (coerce #inst "2016-10-10"                    :string :pattern :dy-dd) "Mon. 10"))))
 
 (deftest keyword-coercions
   (testing "Strings to keywords"
