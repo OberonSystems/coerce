@@ -31,6 +31,7 @@
    :iso-8601              #?(:clj "yyyy-MM-dd'T'kk:mm:ssZ"   :cljs "")
    :yyyy-mm-dd-hh-mm-ss   #?(:clj "yyyy-MM-dd kk:mm:ss"      :cljs "")
    :yyyy-mm-dd.hh-mm-ss-z #?(:clj "yyyy-MM-dd HH:mm:ss z"    :cljs "")
+   :yyyy-mm-ddThh-mm-ss   #?(:clj "yyyy-MM-dd'T'HH-mm-ss"    :cljs "")
    :week                  #?(:clj "ww"                       :cljs "")
    :day                   #?(:clj "EEEE"                     :cljs "")
    :24h-mm-ss             #?(:clj "HH:mm:ss"                 :cljs "")})
