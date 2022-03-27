@@ -12,6 +12,9 @@
    :dd-mmm-yy              #?(:clj "d-MMMM-yy"                :cljs "")
    :dd-mmm-yyyy            #?(:clj "dd MMM yyyy"              :cljs "")
 
+   :dd-mmmm                #?(:clj "dd MMMM"                  :cljs "")
+   :dd-mmmm-yyyy           #?(:clj "dd MMMM yyyy"             :cljs "")
+
    :dd-mm-yyyy             #?(:clj "dd-MM-yyyy"               :cljs "")
    :dd-mm-yyyy-hhmma       #?(:clj "dd-MM-yyyy hh:mma"        :cljs "")
 

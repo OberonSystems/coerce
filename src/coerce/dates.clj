@@ -1,8 +1,8 @@
 (ns coerce.dates
   (:require [clojure.string :as s]
             [coerce.constants :refer [+date-patterns+]])
-  (:import  [java.util TimeZone Date]
-            [java.text SimpleDateFormat]))
+  (:import  [java.util TimeZone Date Locale]
+            [java.text SimpleDateFormat DateFormatSymbols]))
 
 ;;; --------------------------------------------------------------------------------
 
@@ -16,13 +16,42 @@
 (defmulti date->string pattern-dispatcher)
 (defmulti string->date pattern-dispatcher)
 
-;;;
+;;; --------------------------------------------------------------------------------
+;; By using Locale/US, we get Jan, Feb, etc, rather than
+;; Jan. Feb. (with a dot) that we'd get with Locale/AUS (and maybe
+;; others).
+;;
+;; We have to set it to something so I think this is 'sane' default.
+
+(defonce +date-symbols+ (DateFormatSymbols. Locale/US))
+(defonce +lenient?+     false)
+(defonce +timezone+     "UTC")
+
+(defn- make-locale
+  [loc]
+  (if (string? loc)
+    (let [[lang country] (s/split loc #"_")]
+      (if country
+        (Locale. lang country)
+        (Locale. loc)))
+    loc))
+
+(defn set-format-options!
+  ([]       (set-format-options! nil    nil nil))
+  ([locale] (set-format-options! locale nil nil))
+  ;;
+  ([locale lenient? timezone]
+   (alter-var-root (var +date-symbols+) (constantly (DateFormatSymbols. (or (make-locale locale)
+                                                                            Locale/US))))
+   (alter-var-root (var +lenient?+)     (constantly (boolean lenient?)))
+   (alter-var-root (var +timezone+)     (constantly (or timezone "UTC")))
+   nil))
 
 (defn- make-date-format
   [pattern]
-  (doto (SimpleDateFormat. pattern)
-    (.setTimeZone (TimeZone/getTimeZone "UTC"))
-    (.setLenient false)))
+  (doto (SimpleDateFormat. pattern +date-symbols+)
+    (.setTimeZone (TimeZone/getTimeZone +timezone+))
+    (.setLenient +lenient?+)))
 
 (defmethod date->string ::pattern
   [v pattern]
