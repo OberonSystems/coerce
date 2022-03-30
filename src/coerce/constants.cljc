@@ -6,7 +6,7 @@
   {:yyyy-mm-dd             #?(:clj "yyyy-MM-dd"               :cljs "")
    :yyyy-mm-dd-HHmm        #?(:clj "yyyy-MM-dd HH:mm"         :cljs "")
 
-   :yyccmmdd               #?(:clj "yyyyMMdd"                 :cljs "")
+   :yyyymmdd               #?(:clj "yyyyMMdd"                 :cljs "")
 
    :dd-mmm                 #?(:clj "dd MMM"                   :cljs "")
    :dd-mmm-yy              #?(:clj "d-MMMM-yy"                :cljs "")
