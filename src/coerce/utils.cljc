@@ -34,16 +34,11 @@
   ([s] (keywordify nil s))
   ([ns s]
    (when-let [s (some-> s
-                        clean-string
-                        collapse-spaces
+                        (s/replace #"\W" " ")
                         s/lower-case
-                        (s/replace #"\W" "-")
-                        (s/replace #"[-]{2,}" "-"))]
-     (let [[ns-or-k maybe-k] (s/split s #":" 2)
-           [ns k]            (if maybe-k
-                               [(or ns-or-k ns) maybe-k]
-                               [ns              ns-or-k])]
-       (keyword ns k)))))
+                        clean-string
+                        (s/replace #" " "-"))]
+     (keyword ns s))))
 
 (defn guess-sign
   [s]
