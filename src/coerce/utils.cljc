@@ -37,7 +37,7 @@
                         (s/replace #"\W" " ")
                         s/lower-case
                         clean-string
-                        (s/replace #" " "-"))]
+                        (s/replace #"_| " "-"))]
      (keyword ns s))))
 
 (defn guess-sign
