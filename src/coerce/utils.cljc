@@ -9,17 +9,37 @@
   [s]
   (s/replace s #"\s+" " "))
 
+(defn alpha-only
+  [s]
+  (s/replace s #"[^A-Za-z]" ""))
+
+(defn numeric-only
+  [s]
+  (s/replace s #"[^0-9]" ""))
+
+(defn alpha-numeric-only
+  [s]
+  (s/replace s #"[^A-Za-z0-9]" ""))
+
+(def constantly-nil (constantly nil))
+
 (defn clean-string
-  [v & [{:keys [clean? collapse? upper? lower?]
+  [v & [{:keys [clean? collapse? upper? lower? alpha? numeric?]
          :or {clean?    true
               collapse? true}
          :as options}]]
   (when-not (s/blank? v)
-    (cond-> v
-      clean?    s/trim
-      collapse? collapse-spaces
-      upper?    s/upper-case
-      lower?    s/lower-case)))
+    (let [v (cond-> v
+              (and alpha?       numeric?)       alpha-numeric-only
+              (and alpha?       (not numeric?)) alpha-only
+              (and (not alpha?) numeric?)       numeric-only
+              ;;
+              clean?                s/trim
+              collapse?             collapse-spaces
+              ;;
+              upper?    s/upper-case
+              lower?    s/lower-case)]
+      (when-not (s/blank? v) v))))
 
 (defn join-cleanly
   ([coll]

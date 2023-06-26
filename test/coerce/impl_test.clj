@@ -41,3 +41,16 @@
       #inst "2000-03-01" ["01 Mar. 2000"  :dd-mmm-yyyy]
       #inst "2000-03-01" ["01 March"      :dd-mmmm]
       #inst "2000-03-01" ["01 March 2000" :dd-mmmm-yyyy])))
+
+(deftest test-coerce-string
+  (are [x y] (= x (coerce y
+                          :string
+                          :upper?   true
+                          :alpha?   true
+                          :numeric? true))
+    nil      "  ~ $ . %"
+    "ABC123" " a b   c 1  ~ $ 2  . % 3"
+    "ABC123" "abc123"
+    "ABC123" "ABC123"
+    "ABC123" "ABC-123"
+    "ABC123" " ABC123+"))
