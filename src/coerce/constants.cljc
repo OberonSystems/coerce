@@ -37,11 +37,11 @@
    :day-dd-month-yyyy      #?(:clj "EEEE, dd MMMM yyyy"       :cljs "")
 
    :rfc-3999               #?(:clj "yyyy-MM-dd'T'HH:mm:ssXXX" :cljs "")
-   :iso-8601               #?(:clj "yyyy-MM-dd'T'kk:mm:ssZ"   :cljs "")
-   :yyyy-mm-dd-hh-mm-ss    #?(:clj "yyyy-MM-dd kk:mm:ss"      :cljs "")
+   :iso-8601               #?(:clj "yyyy-MM-dd'T'HH:mm:ssZ"   :cljs "")
+   :yyyy-mm-dd-hh-mm-ss    #?(:clj "yyyy-MM-dd HH:mm:ss"      :cljs "")
    :yyyy-mm-dd.hh-mm-ss-z  #?(:clj "yyyy-MM-dd HH:mm:ss z"    :cljs "")
    :yyyy-mm-ddThh-mm-ss    #?(:clj "yyyy-MM-dd'T'HH-mm-ss"    :cljs "")
-   :yyyymmddhhmmss         #?(:clj "yyyyMMddkkmmss"           :cljs "")
+   :yyyymmddhhmmss         #?(:clj "yyyyMMddHHmmss"           :cljs "")
 
    :yyyy|mm|dd-directories #?(:clj  "yyyy/MM/dd"              :cljs "")
 
